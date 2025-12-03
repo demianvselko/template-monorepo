@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./apps/backend/Dockerfile
+    container_name: template-login-monorepo-backend
+    ports:
+      - '4000:4000'
+    environment:
+      - PORT=4000
+      - NODE_ENV=production
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./apps/frontend/Dockerfile
+    container_name: template-login-monorepo-frontend
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - BACKEND_URL=http://backend:4000
+    depends_on:
+      - backend

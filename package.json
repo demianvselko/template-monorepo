@@ -1,0 +1,30 @@
+{
+  "name": "template-login-monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c cyan,magenta \"pnpm dev:backend\" \"pnpm dev:frontend\"",
+    "dev:backend": "pnpm --filter backend start:dev",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "build": "pnpm build:backend && pnpm build:frontend",
+    "build:backend": "pnpm --filter backend build",
+    "build:frontend": "pnpm --filter frontend build",
+    "start": "pnpm start:backend & pnpm start:frontend",
+    "start:backend": "pnpm --filter backend start:prod",
+    "start:frontend": "pnpm --filter frontend start",
+    "docker:dev:up": "docker compose -f docker-compose.dev.yml up",
+    "docker:dev:up:build": "docker compose -f docker-compose.dev.yml up --build",
+    "docker:dev:down": "docker compose -f docker-compose.dev.yml down",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:down:clean": "docker compose down -v --rmi local"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

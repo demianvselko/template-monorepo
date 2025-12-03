@@ -1,0 +1,15 @@
+node_modules
+apps/**/node_modules
+packages/**/node_modules
+
+dist
+apps/**/dist
+.next
+apps/**/.next
+
+.git
+.gitignore
+Dockerfile
+docker-compose*.yml
+pnpm-debug.log*
+npm-debug.log*
