@@ -18,16 +18,38 @@
     "docker:dev:down": "docker compose -f docker-compose.dev.yml down",
     "docker:up": "docker compose up -d --build",
     "docker:down": "docker compose down",
-    "docker:down:clean": "docker compose down -v --rmi local"
+    "docker:down:clean": "docker compose down -v --rmi local",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.20.0",
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4"
   },
   "dependencies": {
     "@types/jest": "^30.0.0"
+  },
+  "lint-staged": {
+    "apps/backend/**/*.{ts,js}": [
+      "pnpm -F @app/backend run lint:fix",
+      "prettier -w"
+    ],
+    "apps/frontend/**/*.{ts,tsx,js,jsx}": [
+      "pnpm -F @app/frontend run lint:fix",
+      "prettier -w"
+    ],
+    "*.{json,md,yml,yaml,css,scss,html}": [
+      "prettier -w"
+    ]
   }
 }
