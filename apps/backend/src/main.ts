@@ -1,23 +1,31 @@
-import { NestFactory } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
-import { AppModule } from './app.module';
+import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
-async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter(),
-  );
+import { AppBootstrapFactory } from './infraestructure/http/bootstrap/app-bootstrap.factory';
+import type { AppConfig } from './infraestructure/http/config/app.config';
 
-  app.enableCors({
-    origin: `${process.env.FRONTEND_URL} || 'http://localhost:3000'`,
-    credentials: true,
-  });
+async function bootstrap(): Promise<void> {
+  const logger = new Logger('Bootstrap');
 
-  const port = process.env.PORT || 4000;
-  await app.listen(port, '0.0.0.0');
-  console.log(`Backend is running on: ${await app.getUrl()}`);
+  const app = await AppBootstrapFactory.create();
+
+  const configService = app.get(ConfigService);
+  const appConfig = configService.get<AppConfig>('app');
+
+  if (!appConfig) {
+    logger.error('App configuration could not be loaded');
+    process.exit(1);
+    return;
+  }
+
+  await app.listen(appConfig.port, appConfig.host);
+  const url = await app.getUrl();
+
+  logger.log(`Backend started at ${url}`);
 }
-bootstrap();
+
+bootstrap().catch((error: unknown) => {
+  // eslint-disable-next-line no-console
+  console.error('Fatal error on bootstrap', error);
+  process.exit(1);
+});
