@@ -17,14 +17,23 @@ This repository is a **pnpm monorepo** with two apps:
 pnpm install
 ```
 
-Run both backend and frontend:
+# Run both backend and frontend
+
+```bash
 pnpm dev
+```
 
-Run only the backend:
+# Run only the backend
+
+```bash
 pnpm dev:backend
+```
 
-Run only the frontend:
+# Run only the frontend
+
+```bash
 pnpm dev:frontend
+```
 
 Same to build
 
@@ -32,7 +41,7 @@ pnpm build          # builds backend + frontend
 pnpm build:backend  # build backend
 pnpm build:frontend # build frontend
 
-Production (without Docker)
+# Production (without Docker)
 
 ```bash
 pnpm build
@@ -72,10 +81,10 @@ Clean containers, volumes and local images:
 pnpm docker:down:clean
 ```
 
-### ✅ Instalar dependencias solo en el backend
+## ✅ Instalar dependencias solo en el backend
 
 ```bash
-pnpm add -D @types/jest --filter backend
+pnpm add -D @nestjs/config --filter backend
 ```
 
 ### ✅ Instalar dependencias solo en el frontend
@@ -89,3 +98,10 @@ pnpm add -D @types/jest --filter frontend
 ```bash
 pnpm add D @types/jest -w
 ```
+
+import cookie from '@fastify/cookie';
+import compress from '@fastify/compress';
+import rateLimit from '@fastify/rate-limit';
+import cors from '@fastify/cors';
+
+pnpm add -D @fastify/cookie @fastify/compress @fastify/rate-limit @fastify/cors --filter backend
